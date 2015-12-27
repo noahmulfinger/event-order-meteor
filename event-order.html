@@ -1,0 +1,147 @@
+<head>
+  <title>Order</title>
+
+</head>
+
+<template name="home">
+  <div class="container">
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Event Order</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          {{#if currentUser }}
+          <li><a>{{> logout}}</a></li>
+          {{/if}}
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+
+    {{#if currentUser }}
+      {{#if isAdmin}}
+        {{> addOption}}
+        {{> optionList}}
+      {{/if}}
+      {{> addOrder}}      
+      {{> orderList}}
+    {{else}}
+      <div class="jumbotron">
+        {{> login}}
+        <h2>OR</h2>
+        {{> register}}
+      </div>
+    {{/if}}
+
+    </div>
+
+  </div>
+</template>
+
+
+<template name="addOption">
+  <form class="new-option form-horizontal">
+    <fieldset>
+    <div class="form-group">
+      <input class="form-control" type="text" name="text" placeholder="Type to add new option" />
+    </div>
+    </fieldset>
+  </form>
+</template>
+
+<template name="optionList"> 
+  <h3>Options</h3>
+  <table class="table table-striped table-hover">
+    {{#each options}}
+    <tr>
+     {{> option}}
+    </tr>
+    {{/each}}
+  </table>
+</template>
+
+<template name="addOrder"> 
+  <form class="new-order">
+    <div class="form-group">
+     <table class="table table-striped table-hover">
+      {{#each options}}
+      <tr>
+        <span>{{name}}</span>
+        <select class="form-control" name="{{name}}">
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </tr>
+      {{/each}}
+      <button type="submit" class="delete btn btn-danger">Add Order</button>
+    </table>
+    </div>
+  </form>
+</template>
+
+<template name="orderList"> 
+  <h3>Orders</h3>
+   <table class="table table-striped table-hover">
+    {{#each orders}}
+    <tr> 
+      {{> order}}
+    </tr>
+    {{/each}}
+  </table>
+</template>
+
+
+<template name="order">
+  
+  <span>{{ownerName}}</span>
+    {{#each this.list}}
+    <td>
+      <span>{{name}}</span>
+      <span>{{count}}</span>
+    </td>
+    {{/each}}
+    <td>
+      <button class="delete btn btn-danger">Delete</button>
+    </td>
+</template>
+
+<template name="option">
+  <td>
+    <span>{{name}}</span>
+  </td>
+  <td>
+    <button class="delete btn btn-danger">Delete</button>
+  </td>
+</template>
+
+
+<template name="register">
+  <h2>Register</h2>
+  <form class="register">
+    <p>Username: <input type="text" name="username"></p>
+    <p>Password: <input type="password" name="password"></p>
+    <button type="submit" class="delete btn btn-default">Register</button>
+  </form>
+</template>
+
+<template name="login">
+  <h2>Login</h2>
+  <form class="login">
+    <p>Username: <input type="text" name="username"></p>
+    <p>Password: <input type="password" name="password"></p>
+    <button type="submit" class="delete btn btn-default">Login</button>
+  </form>
+</template>
+
+<template name="logout">
+  <form class="logout">
+    <button type="submit" class="delete btn-xs btn-link">Logout</button>
+  </form>
+</template>
+
